@@ -3,59 +3,37 @@ using static UnityEngine.UI.Image;
 
 public class ParrotClicker : MonoBehaviour
 {
-    bool holdingParrot = false;
+    [SerializeField] int pointsWhenPressed = 1;
 
-    void Update()
+    Rigidbody2D parrotRigidbody;
+    GameManager gameManager;
+
+    void Awake()
     {
-        ClickOnParrot();
-
-        MoveParrot();
+        gameManager = FindFirstObjectByType<GameManager>();
     }
 
-    void ClickOnParrot()
+    void Start()
     {
-        // Clicks on the parrot
-        if (Input.GetMouseButtonDown(0))
-        {
-            Vector2 clickPosition = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
-            RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(clickPosition), Vector2.zero);
-            if (hit)
-            {
-                if (hit && hit.transform.gameObject.tag == "Parrot")
-                {
-                    Debug.Log("clicked on parrot");
-                }
-            }
-        }
+        parrotRigidbody = GetComponent<Rigidbody2D>();
+    }
 
-        // This in the method to check if the mouse holds the parrot
-        if (Input.GetMouseButtonDown(1))
+    void OnCollisionEnter2D(Collision2D other)
+    {
+        Debug.Log("Colliders collide");
+        parrotRigidbody.linearVelocity = Vector2.zero;
+        if (other.gameObject.layer == 4)
         {
-            Vector2 clickPosition = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
-            RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(clickPosition), Vector2.zero);
-            if (hit && hit.transform.gameObject.tag == "Parrot")
-            {
-                Debug.Log("Found object to move");
-                holdingParrot = true;
-            }
-        }
-        // if not holding down the mouse button you stop moving the parrot
-        if (Input.GetMouseButtonUp(1))
-        {
-            holdingParrot = false;
+            Debug.Log("Can Merge Parrots");
         }
     }
 
-    void MoveParrot()
+    public void CountFeathers()
     {
-        if (!holdingParrot) { return; }
-
-        Vector3 mousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 10);
-        if (holdingParrot)
-        {
-            transform.position = Camera.main.ScreenToWorldPoint(mousePos);
-        }
+        gameManager.AddToScore(pointsWhenPressed);
     }
+
+    
 
 }
 
