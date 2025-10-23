@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 public class GameManager : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI scoreText;
-    [SerializeField] GameObject parrot;
+    [SerializeField] public GameObject parrot;
 
     int currentScore = 0;
     bool holdingParrot = false;
@@ -43,7 +43,6 @@ public class GameManager : MonoBehaviour
                     parrotClicker = hit.transform.gameObject.GetComponent<ParrotClicker>();
                     parrot = hit.transform.gameObject;
                     parrotClicker.CountFeathers();
-                    Debug.Log("clicked on parrot");
                 }
             }
         }
@@ -87,4 +86,12 @@ public class GameManager : MonoBehaviour
         currentScore += points;
         scoreText.text = currentScore.ToString();
     }
+
+    public bool StopHoldingParrot()
+    {
+        Debug.Log("Holding parrot becomes false");
+        holdingParrot = false;
+        return holdingParrot;
+    }
+
 }

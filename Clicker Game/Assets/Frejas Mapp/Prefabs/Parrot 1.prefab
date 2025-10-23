@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8344350787363647849}
   - component: {fileID: 6240655240577075708}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Visuals
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -100,8 +100,9 @@ GameObject:
   m_Component:
   - component: {fileID: 5124429923752499423}
   - component: {fileID: 6535239266572322242}
+  - component: {fileID: 765328899991009647}
   - component: {fileID: 8359530355351411310}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Parrot 1
   m_TagString: Parrot
   m_Icon: {fileID: 0}
@@ -154,13 +155,40 @@ CapsuleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 1, y: 2}
   m_Direction: 0
+--- !u!50 &765328899991009647
+Rigidbody2D:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5242860423130936444}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 0
+  m_CollisionDetection: 1
+  m_Constraints: 4
 --- !u!114 &8359530355351411310
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -174,3 +202,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ParrotClicker
   pointsWhenPressed: 1
+  parrot2: {fileID: 4743216126826320843, guid: 47c7a13d6a8b0e8488de3434e03a9200, type: 3}
+  parrot3: {fileID: 234892074210606104, guid: 257b4fd77eaa6724080bc794002b2382, type: 3}
+  parrot4: {fileID: 2193915721502441289, guid: 66e25230295567e46986d7e7bbdf893f, type: 3}
