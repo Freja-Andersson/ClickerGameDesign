@@ -1,11 +1,20 @@
+using NUnit.Framework;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System.Collections.Generic;
+using System.Collections;
 
 public class GameManager : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI scoreText;
     [SerializeField] public GameObject parrot;
+
+    [SerializeField] bool autoClick = false;
+    [SerializeField] bool startTimer = false;
+    [SerializeField] float autoClickTimer = 2;
+    [SerializeField] float currentTime;
+    
 
     int currentScore = 0;
     bool holdingParrot = false;
@@ -14,7 +23,7 @@ public class GameManager : MonoBehaviour
 
     void Awake()
     {
-       // parrotClicker = FindFirstObjectByType<ParrotClicker>();
+       parrotClicker = FindFirstObjectByType<ParrotClicker>();
     }
 
     void Start()
@@ -26,7 +35,37 @@ public class GameManager : MonoBehaviour
     {
         ClickOnParrot();
 
+        AutoClick();
+
         MoveParrot();
+    }
+
+    void AutoClick()
+    {
+        GameObject[] parrotList = GameObject.FindGameObjectsWithTag("Parrot");
+
+        if (autoClick == true)
+        {
+            startTimer = true;
+
+            if (startTimer == true)
+            {
+                currentTime += Time.deltaTime;
+
+                if(currentTime >= autoClickTimer)
+                {
+                    Debug.Log("This autockicks the parrot");
+
+                    foreach (GameObject parrots in parrotList)
+                    {
+                        parrots.GetComponent<ParrotClicker>().CountFeathers();
+                    }
+
+                    startTimer = false;
+                    currentTime = 0;
+                }
+            }
+        }
     }
 
     void ClickOnParrot()
@@ -56,7 +95,6 @@ public class GameManager : MonoBehaviour
             {
                 parrotClicker = hit.transform.gameObject.GetComponent<ParrotClicker>();
                 parrot = hit.transform.gameObject;
-                Debug.Log("Found object to move");
                 holdingParrot = true;
             }
         }
@@ -87,9 +125,13 @@ public class GameManager : MonoBehaviour
         scoreText.text = currentScore.ToString();
     }
 
+    IEnumerator WaitForAutoClick()
+    {
+        yield return new WaitForSeconds(1f);
+    }
+
     public bool StopHoldingParrot()
     {
-        Debug.Log("Holding parrot becomes false");
         holdingParrot = false;
         return holdingParrot;
     }

@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using static UnityEngine.UI.Image;
 
@@ -30,8 +31,6 @@ public class ParrotClicker : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D other)
     {
-        Debug.Log("Colliders collide");
-        
         // merge parrot 1 and spawn parrot 2
         if (other.gameObject.layer == 7 && gameObject.layer == 7)
         {
@@ -63,7 +62,11 @@ public class ParrotClicker : MonoBehaviour
     }
 
 
-
+    public IEnumerator CountFeathersForAutoClick(float timer)
+    {
+        yield return new WaitForSeconds(timer);
+        gameManager.AddToScore(pointsWhenPressed);
+    }
 
 
     void SpawnParrot2()

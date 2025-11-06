@@ -131,6 +131,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Parrot 4
       objectReference: {fileID: 0}
+    - target: {fileID: 2193915721502441289, guid: 66e25230295567e46986d7e7bbdf893f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7789594779517758205, guid: 66e25230295567e46986d7e7bbdf893f, type: 3}
       propertyPath: m_LocalPosition.x
       value: -2.1128502
@@ -873,6 +877,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Parrot 3
       objectReference: {fileID: 0}
+    - target: {fileID: 234892074210606104, guid: 257b4fd77eaa6724080bc794002b2382, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4517279975065108456, guid: 257b4fd77eaa6724080bc794002b2382, type: 3}
       propertyPath: m_LocalPosition.x
       value: 4.005321
@@ -935,7 +943,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1327922155
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1159,6 +1167,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   scoreText: {fileID: 913682890}
   parrot: {fileID: 0}
+  autoClick: 0
+  startTimer: 0
+  autoClickTimer: 2
+  currentTime: 0
 --- !u!1001 &2079176558
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1170,6 +1182,10 @@ PrefabInstance:
     - target: {fileID: 4743216126826320843, guid: 47c7a13d6a8b0e8488de3434e03a9200, type: 3}
       propertyPath: m_Name
       value: Parrot 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4743216126826320843, guid: 47c7a13d6a8b0e8488de3434e03a9200, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5624021718602956648, guid: 47c7a13d6a8b0e8488de3434e03a9200, type: 3}
       propertyPath: m_LocalPosition.x
