@@ -10,16 +10,27 @@ public class GameManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI scoreText;
     [SerializeField] public GameObject parrot;
 
+    [Header("Spawn Egg")]
+    [SerializeField] GameObject egg;
+    [SerializeField] Vector2 spawnTransform;
+    [SerializeField] bool spawnEgg = false;
+    [SerializeField] int eggPrice = 10;
+
+    [Header("Auto Click")]
     [SerializeField] bool autoClick = false;
     [SerializeField] bool startTimer = false;
     [SerializeField] float autoClickTimer = 2;
     [SerializeField] float currentTime;
-    
+    [SerializeField] bool autoClickUpgrade = false;
 
     int currentScore = 0;
     bool holdingParrot = false;
 
     ParrotClicker parrotClicker;
+
+
+    //Mabye do so when you feed the parrots a fruit it starts to autoclick or adds points
+
 
     void Awake()
     {
@@ -54,7 +65,7 @@ public class GameManager : MonoBehaviour
 
                 if(currentTime >= autoClickTimer)
                 {
-                    Debug.Log("This autockicks the parrot");
+                    CheckAutoClickUpgrade();
 
                     foreach (GameObject parrots in parrotList)
                     {
@@ -68,6 +79,34 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    void CheckAutoClickUpgrade()
+    {
+        if (autoClickUpgrade == true)
+        {
+            autoClickTimer -= 0.5f;
+            autoClickUpgrade = false;
+        }
+    }
+
+    public void StartAutoClick()
+    {
+        autoClick = true;
+    }
+    public void UpgradeAutoClick()
+    {
+        autoClickUpgrade = true;
+    }
+
+    public void BuyEgg()
+    {
+        if(currentScore >= eggPrice)
+        {
+            currentScore -= eggPrice;
+            eggPrice += eggPrice;
+            Instantiate(egg, spawnTransform, Quaternion.identity);
+        }
+    }
+
     void ClickOnParrot()
     {
         // Clicks on the parrot
@@ -77,12 +116,20 @@ public class GameManager : MonoBehaviour
             RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(clickPosition), Vector2.zero);
             if (hit)
             {
+                // hits parrot and adds points
                 if (hit && hit.transform.gameObject.tag == "Parrot")
                 {
                     parrotClicker = hit.transform.gameObject.GetComponent<ParrotClicker>();
                     parrot = hit.transform.gameObject;
                     parrotClicker.CountFeathers();
                 }
+
+                if (hit && hit.transform.gameObject.tag == "Egg")
+                {
+                    parrotClicker = hit.transform.gameObject.GetComponent<ParrotClicker>();
+                    parrotClicker.OpenEgg();
+                }
+
             }
         }
 
@@ -91,7 +138,15 @@ public class GameManager : MonoBehaviour
         {
             Vector2 clickPosition = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
             RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(clickPosition), Vector2.zero);
+
             if (hit && hit.transform.gameObject.tag == "Parrot")
+            {
+                parrotClicker = hit.transform.gameObject.GetComponent<ParrotClicker>();
+                parrot = hit.transform.gameObject;
+                holdingParrot = true;
+            }
+
+            if (hit && hit.transform.gameObject.tag == "Egg")
             {
                 parrotClicker = hit.transform.gameObject.GetComponent<ParrotClicker>();
                 parrot = hit.transform.gameObject;
@@ -123,11 +178,6 @@ public class GameManager : MonoBehaviour
     {
         currentScore += points;
         scoreText.text = currentScore.ToString();
-    }
-
-    IEnumerator WaitForAutoClick()
-    {
-        yield return new WaitForSeconds(1f);
     }
 
     public bool StopHoldingParrot()

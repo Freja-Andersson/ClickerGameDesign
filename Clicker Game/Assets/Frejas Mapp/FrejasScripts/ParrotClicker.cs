@@ -6,7 +6,14 @@ public class ParrotClicker : MonoBehaviour
 {
     [SerializeField] int pointsWhenPressed = 1;
 
+    [Header("Egg")]
+    [SerializeField] int timesHit = 0;
+    [SerializeField] SpriteRenderer eggSprite;
+    [SerializeField] SpriteRenderer crackedEggSprite;
+    [SerializeField] SpriteRenderer babySprite;
+
     [Header("Parrot Prefabs")]
+    [SerializeField] GameObject parrot1;
     [SerializeField] GameObject parrot2;
     [SerializeField] GameObject parrot3;
     [SerializeField] GameObject parrot4;
@@ -61,11 +68,26 @@ public class ParrotClicker : MonoBehaviour
         gameManager.AddToScore(pointsWhenPressed);
     }
 
-
-    public IEnumerator CountFeathersForAutoClick(float timer)
+    public void OpenEgg()
     {
-        yield return new WaitForSeconds(timer);
-        gameManager.AddToScore(pointsWhenPressed);
+        timesHit += 1;
+
+        if (timesHit >= 3)
+        {
+            eggSprite.enabled = false;
+            crackedEggSprite.enabled = true;
+        }
+        if (timesHit >= 6)
+        {
+            crackedEggSprite.enabled = false;
+            babySprite.enabled = true;
+        }
+        if (timesHit >= 9)
+        {
+            Instantiate(parrot1, transform.position, Quaternion.identity);
+            gameManager.StopHoldingParrot();
+            Destroy(gameObject);
+        }
     }
 
 
