@@ -1,9 +1,7 @@
-using NUnit.Framework;
+
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using System.Collections.Generic;
-using System.Collections;
 
 public class GameManager : MonoBehaviour
 {
@@ -92,6 +90,7 @@ public class GameManager : MonoBehaviour
     {
         autoClick = true;
     }
+
     public void UpgradeAutoClick()
     {
         autoClickUpgrade = true;
