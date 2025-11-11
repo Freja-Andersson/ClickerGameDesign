@@ -101,6 +101,7 @@ GameObject:
   - component: {fileID: 5624021718602956648}
   - component: {fileID: 6026094847062254197}
   - component: {fileID: 898335776045237697}
+  - component: {fileID: 2637203278769908434}
   - component: {fileID: 9012314974921407961}
   m_Layer: 8
   m_Name: Parrot 2
@@ -189,6 +190,103 @@ Rigidbody2D:
   m_SleepingMode: 0
   m_CollisionDetection: 1
   m_Constraints: 4
+--- !u!82 &2637203278769908434
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4743216126826320843}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 0.511
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!114 &9012314974921407961
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -201,7 +299,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 210ecdedaf971d74594e9c95b385f99f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ParrotClicker
-  pointsWhenPressed: 2
+  pointsWhenPressed: 8
+  timesHit: 0
+  eggSprite: {fileID: 0}
+  crackedEggSprite: {fileID: 0}
+  babySprite: {fileID: 0}
+  parrot1: {fileID: 0}
   parrot2: {fileID: 4743216126826320843}
   parrot3: {fileID: 234892074210606104, guid: 257b4fd77eaa6724080bc794002b2382, type: 3}
   parrot4: {fileID: 2193915721502441289, guid: 66e25230295567e46986d7e7bbdf893f, type: 3}
+  tweetSounds:
+  - {fileID: 8300000, guid: 2e2b05b8bc4a9114f8e87a17baa29799, type: 3}
+  - {fileID: 8300000, guid: bd57f9ff27fe2364797e4665865d030b, type: 3}
+  - {fileID: 8300000, guid: 50bd2121800d25a4fbe2799b6ba7ac96, type: 3}
+  crackSounds: []
+  thudSound: {fileID: 8300000, guid: 7936ad327e2fc0f4385c46ae7940d69a, type: 3}

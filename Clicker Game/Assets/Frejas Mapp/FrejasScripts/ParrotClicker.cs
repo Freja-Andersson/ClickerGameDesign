@@ -17,6 +17,14 @@ public class ParrotClicker : MonoBehaviour
     [SerializeField] GameObject parrot3;
     [SerializeField] GameObject parrot4;
 
+    [Header("Sounds")]
+    [SerializeField] AudioClip[] tweetSounds;
+    [SerializeField] AudioClip[] crackSounds;
+    [SerializeField] AudioClip thudSound;
+
+    bool playCrackSound = false;
+
+    AudioSource audioSource;
     Rigidbody2D parrotRigidbody;
     GameManager gameManager;
 
@@ -28,6 +36,12 @@ public class ParrotClicker : MonoBehaviour
     void Start()
     {
         parrotRigidbody = GetComponent<Rigidbody2D>();
+        audioSource = GetComponent<AudioSource>();
+
+        if (audioSource == null)
+        {
+            audioSource = gameObject.AddComponent<AudioSource>();
+        }
     }
 
     void FixedUpdate()
@@ -37,6 +51,10 @@ public class ParrotClicker : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D other)
     {
+        if (other.gameObject.layer != gameObject.layer)
+        {
+            audioSource.PlayOneShot(thudSound);
+        }
         // merge parrot 1 and spawn parrot 2
         if (other.gameObject.layer == 7 && gameObject.layer == 7)
         {
@@ -60,11 +78,27 @@ public class ParrotClicker : MonoBehaviour
         }
     }
 
-
-
     public void CountFeathers()
     {
         gameManager.AddToScore(pointsWhenPressed);
+
+    }
+
+    public void TweetSound()
+    {
+        int randomIndex = Random.Range(0, tweetSounds.Length);
+        audioSource.PlayOneShot(tweetSounds[randomIndex]);
+    }
+
+    void CrackSound()
+    {
+        playCrackSound = true;
+        if(playCrackSound == true)
+        {
+            int random = Random.Range(0, crackSounds.Length);
+            audioSource.PlayOneShot(crackSounds[random]);
+            playCrackSound = false;
+        }
     }
 
     public void OpenEgg()
@@ -75,11 +109,13 @@ public class ParrotClicker : MonoBehaviour
         {
             eggSprite.enabled = false;
             crackedEggSprite.enabled = true;
+            CrackSound();
         }
         if (timesHit >= 6)
         {
             crackedEggSprite.enabled = false;
             babySprite.enabled = true;
+            CrackSound();
         }
         if (timesHit >= 9)
         {
@@ -92,6 +128,7 @@ public class ParrotClicker : MonoBehaviour
 
     void SpawnParrot2()
     {
+
         if (gameManager.parrot == this.gameObject)
         {
             Instantiate(parrot2, transform.position, Quaternion.identity);

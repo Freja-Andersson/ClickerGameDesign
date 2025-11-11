@@ -5,29 +5,28 @@ using UnityEngine.InputSystem;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] TextMeshProUGUI scoreText;
     [SerializeField] public GameObject parrot;
+
+    [Header("Text")]
+    [SerializeField] TextMeshProUGUI scoreText;
+    [SerializeField] TextMeshProUGUI eggPriceText;
+    [SerializeField] TextMeshProUGUI autoClickPriceText;
 
     [Header("Spawn Egg")]
     [SerializeField] GameObject egg;
     [SerializeField] Vector2 spawnTransform;
-    //[SerializeField] bool spawnEgg = false;
     [SerializeField] int eggPrice = 10;
 
     [Header("Auto Click")]
     [SerializeField] bool autoClick = false;
-    [SerializeField] bool startTimer = false;
     [SerializeField] float autoClickTimer = 2;
     [SerializeField] float currentTime;
-    [SerializeField] bool autoClickUpgrade = false;
+    [SerializeField] int autoClickPrice = 50;
 
     int currentScore = 0;
     bool holdingParrot = false;
 
     ParrotClicker parrotClicker;
-
-
-    //Mabye do so when you feed the parrots a fruit it starts to autoclick or adds points
 
 
     void Awake()
@@ -37,7 +36,10 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+
         scoreText.text = currentScore.ToString();
+        eggPriceText.text = eggPrice.ToString();
+        autoClickPriceText.text = autoClickPrice.ToString();
     }
 
     void Update()
@@ -55,62 +57,56 @@ public class GameManager : MonoBehaviour
 
         if (autoClick == true)
         {
-            startTimer = true;
+            currentTime += Time.deltaTime;
 
-            if (startTimer == true)
+            if (currentTime >= autoClickTimer)
             {
-                currentTime += Time.deltaTime;
-
-                if(currentTime >= autoClickTimer)
+                foreach (GameObject parrots in parrotList)
                 {
-                    CheckAutoClickUpgrade();
-
-                    foreach (GameObject parrots in parrotList)
-                    {
-                        parrots.GetComponent<ParrotClicker>().CountFeathers();
-                    }
-
-                    startTimer = false;
-                    currentTime = 0;
+                    parrots.GetComponent<ParrotClicker>().CountFeathers();
                 }
+
+                scoreText.text = currentScore.ToString();
+                currentTime = 0;
             }
         }
     }
 
-    void CheckAutoClickUpgrade()
+    public void BuyAutoClickUpgrade()
     {
-        if (autoClickUpgrade == true)
+        if(autoClickPrice <= currentScore)
         {
-            autoClickTimer -= 0.5f;
-            autoClickUpgrade = false;
+            currentScore -= autoClickPrice;
+            autoClickPrice = autoClickPrice * 8;
+            autoClickPriceText.text = autoClickPrice.ToString();
+            scoreText.text = currentScore.ToString();
+
+            if (autoClick == true)
+            {
+                autoClickTimer -= 0.3f;
+            }
+
+            if (autoClick == true) { return; }
+
+            autoClick = true;
         }
-    }
 
-    public void StartAutoClick()
-    {
-        autoClick = true;
-    }
-
-    public void UpgradeAutoClick()
-    {
-        autoClickUpgrade = true;
     }
 
     public void BuyEgg()
     {
-        if (currentScore < eggPrice)
-        {
-            Debug.Log("Cant afford egg");
-        }
+        Vector2 spawnPoint = FindValidSpawnPoint();
 
-        if(currentScore >= eggPrice)
+        if (currentScore >= eggPrice)
         {
             currentScore -= eggPrice;
-            eggPrice += eggPrice;
-            Instantiate(egg, spawnTransform, Quaternion.identity);
+            eggPrice = eggPrice * 4;
+            Instantiate(egg, spawnPoint, Quaternion.identity);
+            eggPriceText.text = eggPrice.ToString();
             scoreText.text = currentScore.ToString();
         }
     }
+
 
     void ClickOnParrot()
     {
@@ -127,6 +123,7 @@ public class GameManager : MonoBehaviour
                     parrotClicker = hit.transform.gameObject.GetComponent<ParrotClicker>();
                     parrot = hit.transform.gameObject;
                     parrotClicker.CountFeathers();
+                    parrotClicker.TweetSound();
                 }
 
                 if (hit && hit.transform.gameObject.tag == "Egg")
@@ -183,6 +180,32 @@ public class GameManager : MonoBehaviour
     {
         currentScore += points;
         scoreText.text = currentScore.ToString();
+    }
+
+
+    Vector2 FindValidSpawnPoint()
+    {
+        int maxAttempts = 50;
+        float minDistance = 1.5f; // Minimum distance from other colliders
+        Vector2 spawnPoint = Vector2.zero;
+
+        for (int i = 0; i < maxAttempts; i++)
+        {
+            // Random position within your desired area
+            spawnPoint = new Vector2(Random.Range(-9f, 4f), Random.Range(-5f, 5f));
+
+            // Check for nearby colliders 
+            Collider2D hit = Physics2D.OverlapCircle(spawnPoint, minDistance);
+
+            if (hit == null)
+            {
+                // Found a free spot
+                return spawnPoint;
+            }
+        }
+
+        Debug.LogWarning("Could not find a valid spawn point after many attempts!");
+        return spawnPoint; 
     }
 
     public bool StopHoldingParrot()
