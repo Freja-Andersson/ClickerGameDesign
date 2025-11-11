@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour
     [Header("Spawn Egg")]
     [SerializeField] GameObject egg;
     [SerializeField] Vector2 spawnTransform;
-    [SerializeField] bool spawnEgg = false;
+    //[SerializeField] bool spawnEgg = false;
     [SerializeField] int eggPrice = 10;
 
     [Header("Auto Click")]
@@ -98,11 +98,17 @@ public class GameManager : MonoBehaviour
 
     public void BuyEgg()
     {
+        if (currentScore < eggPrice)
+        {
+            Debug.Log("Cant afford egg");
+        }
+
         if(currentScore >= eggPrice)
         {
             currentScore -= eggPrice;
             eggPrice += eggPrice;
             Instantiate(egg, spawnTransform, Quaternion.identity);
+            scoreText.text = currentScore.ToString();
         }
     }
 
