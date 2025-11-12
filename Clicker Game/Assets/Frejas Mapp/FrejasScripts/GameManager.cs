@@ -64,6 +64,7 @@ public class GameManager : MonoBehaviour
                 foreach (GameObject parrots in parrotList)
                 {
                     parrots.GetComponent<ParrotClicker>().CountFeathers();
+                    parrots.GetComponent<ParrotClicker>().PlayParrotClickAnimation();
                 }
 
                 scoreText.text = currentScore.ToString();
@@ -77,7 +78,7 @@ public class GameManager : MonoBehaviour
         if(autoClickPrice <= currentScore)
         {
             currentScore -= autoClickPrice;
-            autoClickPrice = autoClickPrice * 8;
+            autoClickPrice += autoClickPrice * 8;
             autoClickPriceText.text = autoClickPrice.ToString();
             scoreText.text = currentScore.ToString();
 
@@ -100,7 +101,7 @@ public class GameManager : MonoBehaviour
         if (currentScore >= eggPrice)
         {
             currentScore -= eggPrice;
-            eggPrice = eggPrice * 4;
+            eggPrice += eggPrice * 4;
             Instantiate(egg, spawnPoint, Quaternion.identity);
             eggPriceText.text = eggPrice.ToString();
             scoreText.text = currentScore.ToString();
@@ -124,6 +125,7 @@ public class GameManager : MonoBehaviour
                     parrot = hit.transform.gameObject;
                     parrotClicker.CountFeathers();
                     parrotClicker.TweetSound();
+                    parrotClicker.PlayParrotClickAnimation();
                 }
 
                 if (hit && hit.transform.gameObject.tag == "Egg")
@@ -173,6 +175,7 @@ public class GameManager : MonoBehaviour
         {
             //parrot.transform.position = Camera.main.ScreenToWorldPoint(mousePos);
             parrot.GetComponent<Rigidbody2D>().MovePosition(mousePos);
+            parrotClicker.PlayParrotHoverAnimation();
         }
     }
 

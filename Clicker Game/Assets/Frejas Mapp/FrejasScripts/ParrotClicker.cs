@@ -21,9 +21,11 @@ public class ParrotClicker : MonoBehaviour
     [SerializeField] AudioClip[] tweetSounds;
     [SerializeField] AudioClip[] crackSounds;
     [SerializeField] AudioClip thudSound;
+    [SerializeField] AudioClip tweetSound;
 
     bool playCrackSound = false;
 
+    Animator parrotAnimator;
     AudioSource audioSource;
     Rigidbody2D parrotRigidbody;
     GameManager gameManager;
@@ -37,6 +39,7 @@ public class ParrotClicker : MonoBehaviour
     {
         parrotRigidbody = GetComponent<Rigidbody2D>();
         audioSource = GetComponent<AudioSource>();
+        parrotAnimator = GetComponentInChildren<Animator>();
 
         if (audioSource == null)
         {
@@ -69,18 +72,58 @@ public class ParrotClicker : MonoBehaviour
             Destroy(gameObject);
             Destroy(other.gameObject);
         }
-        // merge parrot 3 and spawn parrot 4
+        /* / merge parrot 3 and spawn parrot 4
         if (other.gameObject.layer == 9 && gameObject.layer == 9)
         {
             SpawnParrot4();
             Destroy(gameObject);
             Destroy(other.gameObject);
-        }
+        } */
     }
 
     public void CountFeathers()
     {
         gameManager.AddToScore(pointsWhenPressed);
+
+    }
+
+    public void PlayParrotClickAnimation()
+    {
+
+        if (gameObject.layer == 7) //Parrot1
+        {
+            parrotAnimator.Play("Parrot1Click");
+        }
+
+        if (gameObject.layer == 8) //Parrot2
+        {
+            parrotAnimator.Play("Parrot2Click");
+        }
+
+        if (gameObject.layer == 9) //Parrot3
+        {
+            parrotAnimator.Play("Parrot3Click");
+        }
+
+    }
+
+    public void PlayParrotHoverAnimation()
+    {
+
+        if (gameObject.layer == 7) //Parrot1
+        {
+            parrotAnimator.Play("Parrot12Hover");
+        }
+
+        if (gameObject.layer == 8) //Parrot2
+        {
+            parrotAnimator.Play("Parrot12Hover");
+        }
+
+        if (gameObject.layer == 9) //Parrot3
+        {
+            parrotAnimator.Play("Parrot3Hover");
+        }
 
     }
 
@@ -92,6 +135,8 @@ public class ParrotClicker : MonoBehaviour
 
     void CrackSound()
     {
+        if(babySprite.enabled == true) { return; }
+
         playCrackSound = true;
         if(playCrackSound == true)
         {
@@ -121,6 +166,7 @@ public class ParrotClicker : MonoBehaviour
         {
             Instantiate(parrot1, transform.position, Quaternion.identity);
             gameManager.StopHoldingParrot();
+            audioSource.PlayOneShot(tweetSound);
             Destroy(gameObject);
         }
     }
@@ -145,6 +191,7 @@ public class ParrotClicker : MonoBehaviour
         }
     }
 
+    /*
     void SpawnParrot4()
     {
         if (gameManager.parrot == this.gameObject)
@@ -152,6 +199,6 @@ public class ParrotClicker : MonoBehaviour
             Instantiate(parrot4, transform.position, Quaternion.identity);
             gameManager.StopHoldingParrot();
         }
-    }
+    } */
 }
 

@@ -117,8 +117,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.48, y: 0.48, z: 0.48}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 5789624509033846455}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -169,7 +169,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
+  m_Sprite: {fileID: -31310937316442293, guid: a997ded005a170841b0ae7fcfe36a5ec, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -399,12 +399,16 @@ MonoBehaviour:
   parrot2: {fileID: 4743216126826320843, guid: 47c7a13d6a8b0e8488de3434e03a9200, type: 3}
   parrot3: {fileID: 234892074210606104, guid: 257b4fd77eaa6724080bc794002b2382, type: 3}
   parrot4: {fileID: 2193915721502441289, guid: 66e25230295567e46986d7e7bbdf893f, type: 3}
-  tweetSounds: []
+  tweetSounds:
+  - {fileID: 8300000, guid: 2e2b05b8bc4a9114f8e87a17baa29799, type: 3}
+  - {fileID: 8300000, guid: bd57f9ff27fe2364797e4665865d030b, type: 3}
+  - {fileID: 8300000, guid: 50bd2121800d25a4fbe2799b6ba7ac96, type: 3}
   crackSounds:
   - {fileID: 8300000, guid: cb498ee7b5f91db4db51cd34f6731c77, type: 3}
   - {fileID: 8300000, guid: 69e7a9acab92e2640ae0021693bef358, type: 3}
   - {fileID: 8300000, guid: 42ce360fee8d7464aa4ec210b25986a2, type: 3}
   thudSound: {fileID: 8300000, guid: 7936ad327e2fc0f4385c46ae7940d69a, type: 3}
+  tweetSound: {fileID: 8300000, guid: 2e2b05b8bc4a9114f8e87a17baa29799, type: 3}
 --- !u!1 &9102661341187891425
 GameObject:
   m_ObjectHideFlags: 0
